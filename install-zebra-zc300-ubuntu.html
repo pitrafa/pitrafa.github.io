@@ -1,0 +1,220 @@
+
+<!DOCTYPE html>
+<html lang="english">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://pitrafa.net/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://pitrafa.net/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://pitrafa.net/theme/font-awesome/css/font-awesome.min.css">
+
+
+
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-3939065-2', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+<meta name="author" content="Felix De Gracia" />
+<meta name="description" content="Install Zebra ZC300 printer in Ubuntu Linux" />
+<meta name="keywords" content="zebra, zc300, ubuntu, linux">
+
+<meta property="og:site_name" content="Felix De Gracia"/>
+<meta property="og:title" content="Installing a Zebra ZC300 Series Card Printer in Ubuntu"/>
+<meta property="og:description" content="Install Zebra ZC300 printer in Ubuntu Linux"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://pitrafa.net/install-zebra-zc300-ubuntu.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2019-02-08 15:20:00-04:00"/>
+<meta property="article:modified_time" content="2019-02-08 15:20:00-04:00"/>
+<meta property="article:author" content="https://pitrafa.net/author/felix-de-gracia.html">
+<meta property="article:section" content="Articles"/>
+<meta property="article:tag" content="zebra"/>
+<meta property="article:tag" content="zc300"/>
+<meta property="article:tag" content="ubuntu"/>
+<meta property="article:tag" content="linux"/>
+<meta property="og:image" content="">
+
+  <title>Felix De Gracia &ndash; Installing a Zebra ZC300 Series Card Printer in Ubuntu</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://pitrafa.net">
+        <img src="https://pitrafa.net/theme/img/profile.png" alt="Felix De Gracia" title="Felix De Gracia">
+      </a>
+      <h1><a href="https://pitrafa.net">Felix De Gracia</a></h1>
+
+<p>Python Developer</p>
+      <nav>
+        <ul class="list">
+          <li><a href="https://pitrafa.net/pages/about.html#about">About</a></li>
+
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-github" href="https://github.com/pitrafa" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/pitrafa" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-instagram" href="https://www.instagram.com/pitrafa/" target="_blank"><i class="fa fa-instagram"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://pitrafa.net">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="install-zebra-zc300-ubuntu">Installing a Zebra ZC300 Series Card Printer in Ubuntu</h1>
+    <p>
+          Posted on Fri 08 February 2019 in <a href="https://pitrafa.net/category/articles.html">Articles</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <h3>Preamble</h3>
+<p>Some days ago at work we received a request to change an old working <a href="https://www.zebra.com/us/en/products/printers/card/zxp-series-3.html">Zebra ZPXS3</a> card printer for a brand new <a href="https://www.zebra.com/us/en/products/printers/card/zc300-series.html">Zebra ZC300</a>.</p>
+<p>The app that make use of it was developed with the Django web framework by its nature the service is running in a dedicated server powered by Ubuntu Server LTS and CUPS for printing.</p>
+<h3>Installing the driver</h3>
+<ul>
+<li><strong> Ubuntu version: </strong> 14.04.5</li>
+<li><strong> Printer driver version: </strong>  1.0.0.0</li>
+</ul>
+<p>Download the current driver from zebra.com (when installing the driver version was 1.0.0.0) from this <a href="https://www.zebra.com/us/en/support-downloads/printers/card/zc300.html">link</a>, I downloaded it to my computer then uploaded it to the server via sftp.</p>
+<p>Unzip the driver.</p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> unzip Zebra_ZC_Card_Printer_Driver-1.0.0.0-Linux-x86_64-Install.tar.zip
+</pre></div>
+
+
+<p>When the unzip process finish we will have an <code>.tar.gz</code> file, let's untar it</p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> tar zxvf Zebra_ZC_Card_Printer_Driver-1.0.0.0-Linux-x86_64-Install.tar.gz
+</pre></div>
+
+
+<p>The fallowing commands will be executed as root, therefore we may obtain a root shell
+with <code>sudo -s</code>.</p>
+<p>Execute the installer.</p>
+<div class="highlight"><pre><span></span><span class="gp">#</span> ./Zebra_ZC_Card_Printer_Driver-1.0.0.0-Linux-x86_64-Install
+</pre></div>
+
+
+<p>Answer "Y" two times, the default install location is <code>'/usr/local/ZebraJaguarDriver'</code> cd to that folder is needed.</p>
+<div class="highlight"><pre><span></span><span class="gp">#</span> <span class="nb">cd</span> /usr/local/ZebraJaguarDriver
+</pre></div>
+
+
+<p>Then</p>
+<div class="highlight"><pre><span></span><span class="gp">#</span> ./Install.sh install
+</pre></div>
+
+
+<p>It will install the printer's driver but not network support is installed at this point, the network driver will be installed with the following command:</p>
+<div class="highlight"><pre><span></span><span class="gp">#</span> ./EthernetInstall.sh xxx.xxx.xxx.xxx <span class="m">2</span>
+</pre></div>
+
+
+<p>Where the first parameter is our printer's ip and the second parameter is our printer model, you can see all the supported models by this driver in the <code>case</code> section of the <code>EthernetInstall.sh</code> script file.</p>
+<p>Now we have installed the printer lets try it out.</p>
+<h3>Testing</h3>
+<p>I made a specific test from the Django app, printing an identification card was not successful.</p>
+<p>When checked the cups logs for the job it said "Filter failed", then in the error logs under <code>/var/log/cups/error_log</code>, theres was one line that said:</p>
+<blockquote>
+<p>...error while loading shared libraries: libpoppler-glib.so.8: cannot open shared object file: No such file or directory</p>
+</blockquote>
+<p>Googled the name of the missing library I ended in https://packages.ubuntu.com/trusty/libpoppler-glib-dev, and then did an <code>apt-cache search</code></p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> apt-cache search libpoppler
+</pre></div>
+
+
+<p>And then istalled the package that contains that library.</p>
+<div class="highlight"><pre><span></span><span class="gp">$</span> sudo apt-get install libpoppler-glib-dev
+</pre></div>
+
+
+<p>Tested the app again and voila! we have our new printer working!</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://pitrafa.net/tag/zebra.html">zebra</a>
+      <a href="https://pitrafa.net/tag/zc300.html">zc300</a>
+      <a href="https://pitrafa.net/tag/ubuntu.html">ubuntu</a>
+      <a href="https://pitrafa.net/tag/linux.html">linux</a>
+    </p>
+  </div>
+
+
+
+
+
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_shortname = 'pitrafa-net';
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>
+        Please enable JavaScript to view comments.
+
+</noscript>
+<!-- End Disqus -->
+</article>
+
+    <footer>
+<p>&copy;  </p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " Felix De Gracia ",
+  "url" : "https://pitrafa.net",
+  "image": "",
+  "description": ""
+}
+</script>
+
+</body>
+</html>
